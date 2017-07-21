@@ -28,9 +28,6 @@
 		B29531FF1F20664F00141B72 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B29532021F20664F00141B72 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B29532041F20664F00141B72 /* CBTQueueGroupDemo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = CBTQueueGroupDemo.plist; sourceTree = "<group>"; };
-		B29532191F20673F00141B72 /* CBTQueueGroupDemoError.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = CBTQueueGroupDemoError.plist; path = /Users/chenbotao/Desktop/CBTQueueGroupDemo/CBTQueueGroupDemoError.plist; sourceTree = "<absolute>"; };
-		B29532291F2067DD00141B72 /* CBTQueueGroupDemoEnterLeave.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = CBTQueueGroupDemoEnterLeave.plist; path = /Users/chenbotao/Desktop/CBTQueueGroupDemo/CBTQueueGroupDemoEnterLeave.plist; sourceTree = "<absolute>"; };
-		B29532391F207C3A00141B72 /* CBTQueueGroupDemoEnterTry.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = CBTQueueGroupDemoEnterTry.plist; path = /Users/chenbotao/Desktop/CBTQueueGroupDemo/CBTQueueGroupDemoEnterTry.plist; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,9 +68,6 @@
 				B29531FF1F20664F00141B72 /* Assets.xcassets */,
 				B29532011F20664F00141B72 /* LaunchScreen.storyboard */,
 				B29532041F20664F00141B72 /* CBTQueueGroupDemo.plist */,
-				B29532191F20673F00141B72 /* CBTQueueGroupDemoError.plist */,
-				B29532291F2067DD00141B72 /* CBTQueueGroupDemoEnterLeave.plist */,
-				B29532391F207C3A00141B72 /* CBTQueueGroupDemoEnterTry.plist */,
 				B29531FC1F20664F00141B72 /* CBTQueueGroupDemo.xcdatamodeld */,
 				B29531F01F20664F00141B72 /* Supporting Files */,
 			);
@@ -319,6 +313,7 @@
 				B29532091F20664F00141B72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

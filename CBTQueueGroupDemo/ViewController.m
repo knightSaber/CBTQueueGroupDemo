@@ -23,7 +23,7 @@
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    [self func6];
+    [self func5];
     
 }
 
@@ -176,45 +176,56 @@
     __block UIImage *image1 ,*image2;
     
     /*
-        需要将dispatch_semaphore_wait放在后面的原因是，程序先执行了下载图片代码,进行wait--，然后下载完成的回调signal++，这时候程序可以继续
+     需要将dispatch_semaphore_wait放在后面的原因是，程序先执行了下载图片代码,进行wait--，然后下载完成的回调signal++，这时候程序可以继续
      */
     
+    dispatch_group_async(group, dispatch_queue_create("1111", DISPATCH_QUEUE_CONCURRENT), ^{
+       
+        // 下载第一张图片
+        [self downloadImageWithUrlString:@"http://g.hiphotos.baidu.com/image/pic/item/95eef01f3a292df54e0e7e08be315c6035a873da.jpg" SuccessBlock:^(UIImage *image) {
+            
+            image1 = image;
+            
+            dispatch_semaphore_signal(semaphore);//信号量++，继续
+            
+        } failBlock:^(id error) {
+            
+        }];
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);//信号量--，阻塞
+        
+    });
     
-    // 下载第一张图片
-    [self downloadImageWithUrlString:@"http://g.hiphotos.baidu.com/image/pic/item/95eef01f3a292df54e0e7e08be315c6035a873da.jpg" SuccessBlock:^(UIImage *image) {
-        
-        image1 = image;
-        dispatch_semaphore_signal(semaphore);//信号量++，继续
-        
-    } failBlock:^(id error) {
-        
-    }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);//信号量--，阻塞
     
+    dispatch_group_async(group, dispatch_queue_create("22222", DISPATCH_QUEUE_CONCURRENT), ^{
+        
+        // 下载第二张图片
+        [self downloadImageWithUrlString:@"http://e.hiphotos.baidu.com/image/pic/item/cc11728b4710b912d4bb69ffc1fdfc03924522bc.jpg" SuccessBlock:^(UIImage *image) {
+            
+            image2 = image;
+            
+            dispatch_semaphore_signal(semaphore);//信号量++，继续
+            
+        } failBlock:^(id error) {
+            
+        }];
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);//信号量--，阻塞
+        
+    });
     
-    // 下载第二张图片
-    [self downloadImageWithUrlString:@"http://e.hiphotos.baidu.com/image/pic/item/cc11728b4710b912d4bb69ffc1fdfc03924522bc.jpg" SuccessBlock:^(UIImage *image) {
-        
-        image2 = image;
-        dispatch_semaphore_signal(semaphore);//信号量++，继续
-        
-    } failBlock:^(id error) {
-        
-    }];
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);//信号量--，阻塞
     
     // 合并图片并且显示
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         
-        // NSLog(@"显示图片! %@",[NSThread currentThread]);
-        
         // 合并图片
         UIImage *image = [self bingImageWithImage1:image1 Image2:image2];
         
+        NSLog(@"%@",[NSThread currentThread]);
+        
         // 显示合并之后的图片!
         self.imageView.image = image;
-        
     });
+    
     
 }
 
@@ -284,7 +295,6 @@
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration ephemeralSessionConfiguration]];
     NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:reque completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
         
-        NSLog(@"%@",response.observationInfo);
         successBlock([UIImage imageWithData:[NSData dataWithContentsOfURL:location]]);
         
     }];
